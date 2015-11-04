@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Arabica';
+    src: url('Arabica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Arabica';
+    src: url('Arabica-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
