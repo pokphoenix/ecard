@@ -10,6 +10,13 @@
     <meta name="author" content="">
 
     <link rel="stylesheet" href="{{url('scripts/bootstrap-3.3.2/css/bootstrap.min.css')}}">
+
+    <link rel="stylesheet" href="{{url('memoprint/fonts/arabica/style.css')}}">
+    <link rel="stylesheet" href="{{url('memoprint/fonts/sukhumvit/style.css')}}">
+    <link rel="stylesheet" href="{{url('memoprint/fonts/quark2/style.css')}}">
+    <link rel="stylesheet" href="{{url('memoprint/fonts/thaisans_neue/style.css')}}">
+    <link rel="stylesheet" href="{{url('memoprint/css/ecard.css')}}">
+
     <script src="{{url('scripts/jquery-1.11.1.min.js')}} "></script>
 </head>
 
@@ -378,7 +385,16 @@
                     <!--   ### Main content ###  -->
                     <div id="col-cen" class="col-sm-12 oh" >
                         <div class="row">
-                            <div class="col-sm-12" style="margin-top:-20px;"><H3>เพิ่มร้าน</H3><h5>กรุณาระบุข้อมูลให้ครบถ้วน</h5>
+                            <div class="col-sm-12" style="margin-top:-20px;">
+                                <p>&nbsp</p>
+                                <H1>Test Font เทสฟ๊อนต์ Arabica ที่ทีก้นกั้น</H1>
+                                <H2>Test Font เทสฟ๊อนต์ Sukhumvit ที่ทีก้นกั้น</H2>
+                                <H2 class="quark">Test Font เทสฟ๊อนต์ Quark ที่ทีก้นกั้น</H2>
+                                <H2 class="quark bold">Test Font เทสฟ๊อนต์ Quark ที่ทีก้นกั้น</H2>
+                                <H2 class="tsn">Test Font เทสฟ๊อนต์ ThaiSans Neue ที่ทีก้นกั้น</H2>
+                                <H2 class="tsn bold">Test Font เทสฟ๊อนต์ ThaiSans Neue ที่ทีก้นกั้น</H2>
+                                <H3>เพิ่มร้าน</H3>
+                                <h5>กรุณาระบุข้อมูลให้ครบถ้วน</h5>
                                 <form id="ecardform" class="form-horizontal" method="post" role="form" action=""   enctype="multipart/form-data">
                                     <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                                     <input type="hidden" name="fbuid" id="fbuid" value="" />

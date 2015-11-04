@@ -1,0 +1,6 @@
+h1 { font-family: Arabica; }
+h2 { font-family: Sukhumvit; font-weight: bold !important; }
+h2.quark { font-family: Quark; font-weight: normal !important; }
+h2.quark.bold { font-family: Quark; font-weight: bold !important; }
+h2.tsn { font-family: ThaiSansNeue; font-weight: normal !important; }
+h2.tsn.bold { font-family: ThaiSansNeue; font-weight: bold !important; }
