@@ -2,8 +2,35 @@
 
 
 
-class custom  {
+class custom
+{
+    public static function substr($string, $len){
 
+        return  strlen($string) > $len ? substr($string,0,$len)."..." : $string;
+    }
+
+    public static function substr_with_ellipsis($string, $chars)
+    {
+        preg_match('/^.{0,' . $chars. '}(?:.*?)\b/iu', $string, $matches);
+        $new_string = $matches[0];
+        return ($new_string === $string) ? $string : $new_string . '&hellip;';
+    }
+
+    public static function chkformatNumber($txt){
+        if (!preg_match ('/[0-9]/', $txt)) {
+            return false ;
+        }
+        return true ;
+    }
+
+    public static  function chkBrowser($nameBroser){
+//        Edge
+//        Chrome
+//        Firefox
+
+
+        return preg_match("/".$nameBroser."/",$_SERVER['HTTP_USER_AGENT']);
+    }
 
 
 
@@ -19,7 +46,7 @@ class custom  {
         if ($mode=="desc"){
             $image_data = $request->image_data ;
             if (empty($image_data)){
-                dd('ไม่มีการอัพโหลดรูป');
+                dd('๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝีก๏ฟฝ๏ฟฝ๏ฟฝัพ๏ฟฝ๏ฟฝลด๏ฟฝูป');
             }
             list($type, $exp) = explode(';', $image_data);
             list(, $data)      = explode(',', $exp);
@@ -114,23 +141,23 @@ class custom  {
         $font_layout_width = 200 ;
         $font_layout_height = 30 ;
 
-        //--- สร้างแถบข้อความขึ้นมา
+        //--- ๏ฟฝ๏ฟฝ๏ฟฝางแถบ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
         $image = imagecreatetruecolor ($font_layout_width,$font_layout_height);
         $white = imagecolorallocate ($image,255,255,255);
         $black = imagecolorallocate ($image,0,0,0);
         imagefill($image,0,0,$black);
-        //--- คำนวนขนาดตัวอักษร
+        //--- ๏ฟฝำนวน๏ฟฝ๏ฟฝาด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัก๏ฟฝ๏ฟฝ
         $bbox = imagettfbbox($font_size,$font_angle,$font_path, $text_bless);
         $text_width = $bbox[2]-$bbox[0];
         $text_height = $bbox[6]-$bbox[0];
-        //--- ทำให้ ตัวอักษรอยู่ตรงกลาง แถบข้อความ
+        //--- ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรง๏ฟฝ๏ฟฝาง แถบ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝ
         $posx = ceil(($font_layout_width-$text_width)/2);
         $posy = ceil(($font_layout_height-$text_height)/2)+2;
-        //$posy = $font_layout_height-$text_height;   //--- ตัวอักษรอยู่ขอบล่าง
+        //$posy = $font_layout_height-$text_height;   //--- ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอบ๏ฟฝ๏ฟฝาง
 
         imagealphablending($gen_image,true);
-        //--- ใส่ข้อความให้รูป
-        //imagettftext( image , font size , angle(องศาของตัวอักษร) , ตำแหน่ง x , ตำแหน่ง y  , color , fontfile , text );
+        //--- ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝูป
+        //imagettftext( image , font size , angle(อง๏ฟฝาของ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัก๏ฟฝ๏ฟฝ) , ๏ฟฝ๏ฟฝ๏ฟฝหน๏ฟฝ x , ๏ฟฝ๏ฟฝ๏ฟฝหน๏ฟฝ y  , color , fontfile , text );
         imagettftext($image, $font_size, $font_angle , $posx, $posy, $white, $font_path, $text_bless);
         //imagepng ($image);
         echo "img_size : $img_width x $img_height<BR>" ;
@@ -152,7 +179,7 @@ class custom  {
         imagedestroy($gen_image);
         imagedestroy($image);
         if (file_exists($urlimage)) {
-            //---  ขั้นตอนการลบรูป original ออกจาก server
+            //---  ๏ฟฝ๏ฟฝ้นตอน๏ฟฝ๏ฟฝ๏ฟฝลบ๏ฟฝูป original ๏ฟฝอก๏ฟฝาก server
             chmod($urlimage, 0644);
             unlink($urlimage);
             custom::rrmdir("upload/ecard/original/$folder_date/");

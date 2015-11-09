@@ -25,7 +25,14 @@ Route::get('ecard', 'EcardController@index');
 Route::post('ecard', 'EcardController@postIndex');
 Route::post('ecard-facebook', 'EcardController@postFacebook');
 Route::post('ecard-ajax', 'EcardController@postAjax');
+Route::get('ecard-gallery-view', 'EcardController@gallery');
+Route::get('ecard-gallery-search/{text}', 'EcardController@gallerySearch');
+Route::get('ecard-gallery-select/{id}', 'EcardController@gallerySelect');
 
 
 Route::get('ecard-copper', 'EcardController@copperIndex');
 Route::post('ecard-copper-ajax', 'EcardController@postAjaxCopper');
+
+
+Route::get('html2canvas', 'TestController@html2canvas');
+
