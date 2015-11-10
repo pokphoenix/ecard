@@ -1,13 +1,7 @@
-    //
-    //var app = angular.module('ecard.gallery', []);   // การ inject module เข้าไป
-    //app.controller('ecard-gallery',function($scope) {
-    //    $scope.controllerName = 'ecard-gallery' ;
-    //});
-    //
-
 
 
 angular.module('ecard.gallery', [])
+
     .factory("ecardGallery",["$http",
         function($http){
             var fac = {};
@@ -22,6 +16,8 @@ angular.module('ecard.gallery', [])
             fac.selectpicData = function(id){
                 return $http.get("ecard-gallery-select/"+id);
             }
+
+
             return fac;
         }])
 
@@ -55,18 +51,23 @@ angular.module('ecard.gallery', [])
             $scope.getPosts();
             //---- end pagination
 
+            //$scope.$emit('LOAD')
+            //setTimeout( $scope.$emit('UNLOAD')
+            //   ,
+            //    ( 5 * 1000 )
+            //);
+            //
+            //$scope.$on('LOAD',function(){$scope.loading=true});
+            //$scope.$on('UNLOAD',function(){$scope.loading=false});
 
             $scope.close_search = function(){
                 getPosts(1);
                 $scope.sts_selectpic = false ;
             }
-
             $scope.close_search=function(){
                 $scope.getPosts(1);
                 $scope.sts_selectpic = false ;
             }
-
-
             $scope.complete=function(){
                 var txt = $scope.search_name;
                 $scope.autocomplete = true ;
@@ -81,20 +82,7 @@ angular.module('ecard.gallery', [])
                     $scope.data = result;
                     $scope.autocomplete = false ;
                 });
-
-                //gallerySelect
-                //
-                //$scope.data = [] ;
-                //console.log(gen_pic_path,gen_pic_name) ;
-                //
-                //$scope.data.push({
-                //    gen_pic_path: $scope.gen_pic_path,
-                //    gen_pic_path: $scope.gen_pic_path
-                //});
-
-
             }
-
 
 
         }])

@@ -54,7 +54,7 @@ form.form-horizontal label.error, label.error {
 .gallery_fb .thumbnail .caption { margin-top:-10px; }
 
 .main-text{ color: #FFF; }
-
+.form-control{font-size:24px;}
 
 @media (max-width: 992px) {
     .main-text { text-align:center; }
@@ -153,6 +153,15 @@ button:focus {outline:0;}
     -webkit-box-shadow:inset 5px 5px 0px #072c44,5px 6px 0px #001233 ;
     box-shadow:inset 5px 5px 0px  #072c44,5px 6px 0px #001233;
 }
+.btn-playnow{font-size:36px;}
+.btn-pagination{font-size:20px;}
+.btn-a{margin-right:10px; padding:20px 0px; width:170px;text-align: center;}
+
+
+.fst-keep{font:bold 60px Arabica;}
+.fst-memory{color:#3fb3a7;font:bold 80px Arabica;}
+.fst-intime{font:bold 60px Arabica;}
+
 
 
 
@@ -287,7 +296,7 @@ button:focus {outline:0;}
 .input_pagination{
     width:50px; hegith:20px; font-size: 20px; float: left; color:#FFF; padding-left: 20px; margin-top:5px; margin-left:20px; background:#053f64; border:0px; border-radius: 20px;
 }
-
+.pagination-crop-img{width:235px;margin-left:300px; }
 
 
 .upload_img_row .btn_clear_img { position:absolute;margin:15px 0px 0px 275px; z-index:1;border-radius:50px;-moz-border-radius: 50px;
@@ -337,6 +346,27 @@ button:focus {outline:0;}
 .gallery_fb .thumbnail { background:#053f64; }
 .gallery_fb .caption{ color:#FFF; font-size: 18px; }
 
+/*#fb_popup .modal-content-in-body::-webkit-scrollbar {*/
+    /*width: 12px;*/
+/*}*/
+/*#fb_popup .modal-content-in-body::-webkit-scrollbar-track {*/
+    /*background-color: #eaeaea;*/
+    /*border-left: 1px solid #ccc;*/
+/*}*/
+/*#fb_popup .modal-content-in-body::-webkit-scrollbar-thumb {*/
+    /*background-color: #3fb3a7;*/
+    /*/!*background: url('../../images/ecard_main/scrollbar.png');*!/*/
+/*}*/
+/*#fb_popup .modal-content-in-body::-webkit-scrollbar-thumb:hover {*/
+    /*background-color: #3fb3a7;*/
+/*}*/
+
+.scroll-pane
+{
+    width: 100%;
+    height: 200px;
+    overflow: auto;
+}
 
 
 input[type=range] {
@@ -428,6 +458,19 @@ input[type=range]:focus::-ms-fill-upper {
 
 
 
+/*.main-wrapper {*/
+    /*/!* The container has to have a predefined dimension though *!/*/
+    /*position: relative;*/
+/*}*/
+/*.main-wrapper img {*/
+    /*position: relative;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*-webkit-transform: translate(-50%, -50%);*/
+    /*transform: translate(-50%, -50%);*/
+/*}*/
+
+
 /* #### Mobile Phones Portrait #### */
 @media screen and (max-device-width: 480px) and (orientation: portrait){
     /* some CSS here */
@@ -441,6 +484,32 @@ input[type=range]:focus::-ms-fill-upper {
 /* #### Mobile Phones Portrait or Landscape #### */
 @media screen and (max-device-width: 640px){
     /* some CSS here */
+    .fst-content{font-size:30px;}
+    .facebook_album_header{
+        background:url('../../images/ecard_main/play_top_head.png'); width:463px; height: 113px;
+        font-size: 30px;
+    }
+
+    /*.play_loy_txt{margin-top:-595px;}*/
+    /*.play_text_name{margin-top:-245px;}*/
+    /*.play_font_text_name{margin-top:-240px; font-size:26px;}*/
+    /*.play_keep_memory{margin-top:-168px; font-size:26px; }*/
+    /*.play_font_message{margin-top:-200px; font-size:26px;}*/
+    /*.play_frame_2_star{margin-top:-555px;}*/
+    /*.play_frame_border_top {margin-top:-555px;}*/
+    /*.play_frame_border_bottom {margin-top:-210px;}*/
+    /*.play_frame_border_left {margin-top:-560px;}*/
+    /*.play_frame_border_right {margin-top:-557px;}*/
+
+    /*.input_pagination{*/
+         /*font-size: 20px; margin-top:5px; margin-left:20px;*/
+    /*}*/
+    #fb_popup .modal-dialog,#success_popup .modal-dialog,#error_popup .modal-dialog{width:550px;left:50%;margin-left:-275px;}
+    #fb_popup .modal-body,#success_popup .modal-body,#error_popup .modal-body{height: auto;}
+
+    .btn-pagination{ font-size:26px; padding: 5px 14px; }
+    .pagination-crop-img{margin-left:300px;margin-top:-65px;width:235px;}
+    .form-control{font-size:20px;}
 }
 
 /* #### iPhone 4+ Portrait or Landscape #### */
@@ -451,6 +520,7 @@ input[type=range]:focus::-ms-fill-upper {
 /* #### iPhone 5 Portrait or Landscape #### */
 @media (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2){
     /* some CSS here */
+
 }
 
 /* #### iPhone 6 and 6 plus Portrait or Landscape #### */
@@ -461,45 +531,35 @@ input[type=range]:focus::-ms-fill-upper {
 /* #### Tablets Portrait or Landscape #### */
 @media screen and (min-device-width: 768px) and (max-device-width: 1024px){
     /* some CSS here */
-    .play_loy_txt{
-        margin-top:-570px;
-    }
-    .play_text_name{
-        margin-top:-225px;
-    }
-    .play_font_text_name{
-        margin-top:-220px;
-    }
+    /*.play_loy_txt{margin-top:-570px;}*/
+    /*.play_text_name{margin-top:-225px;}*/
+    /*.play_font_text_name{margin-top:-220px;}*/
+    /*.play_keep_memory{margin-top:-148px;}*/
+    /*.play_font_message{margin-top:-180px;}*/
+    /*.play_frame_2_star{margin-top:-555px;}*/
+    /*.play_frame_border_top {margin-top:-535px;}*/
+    /*.play_frame_border_bottom {margin-top:-190px;}*/
+    /*.play_frame_border_left {margin-top:-540px;}*/
+    /*.play_frame_border_right {margin-top:-537px;}*/
+    #fb_popup .modal-dialog,#success_popup .modal-dialog,#error_popup .modal-dialog{width:550px;left:50%;margin-left:-275px;}
+    #fb_popup .modal-body,#success_popup .modal-body,#error_popup .modal-body{height: auto;}
 
-    .play_keep_memory{
-        margin-top:-148px;
-        border:1px solid #F00;
-    }
 
-    .play_font_message{
-        margin-top:-180px;
-    }
-    .play_frame_2_star{
-       margin-top:-555px;
-    }
-    .play_frame_border_top {
-        margin-top:-535px;
-    }
-    .play_frame_border_bottom {
-        margin-top:-190px;
-    }
-    .play_frame_border_left {
-        margin-top:-540px;
-    }
-    .play_frame_border_right {
-        margin-top:-537px;
-    }
-
+    .fst-keep{font-size:32px;}
+    .fst-memory{color:#3fb3a7;font-size:40px;}
+    .fst-intime{font-size:32px;}
+    .fst-content{font-size:16px;}
+    .btn-playnow{font-size:24px;}
+    .btn-e-30 {font-size:20px;}
+    .form-control{font-size:20px;}
+    .btn-pagination{  font-size:26px; padding: 5px 14px;}
+    .pagination-crop-img{margin-left:300px;margin-top:-65px;width:235px;}
 }
 
 /* #### Desktops #### */
 @media screen and (min-width: 1024px){
     /* some CSS here */
+    .pagination-crop-img{margin-left:300px;margin-top:-65px;width:235px;}
 }
 
 

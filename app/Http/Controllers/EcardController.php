@@ -78,7 +78,9 @@ class EcardController extends Controller {
 			mkdir($make_img_ori_path, 0777 , true) ;
 		}
 		$urlimage						= $make_img_ori_path.$img_ori_name ;
-		file_put_contents($urlimage, $data);
+		$filesize = file_put_contents($urlimage, $data);
+		if ($filesize>5242880) { echo "error" ; exit(); }
+
 		$make_img_gen_path 				= "upload/ecard/generate/$folder_date/" ;
 		if(!is_dir($make_img_gen_path)) {
 			mkdir($make_img_gen_path, 0777 , true) ;
@@ -103,8 +105,8 @@ class EcardController extends Controller {
 			//---  ขั้นตอนการลบรูป original ออกจาก server
 			chmod($urlimage, 0644);
 			unlink($urlimage);
-			custom::rrmdir("upload/ecard/original/$folder_date/");
-			custom::rrmdir("upload/ecard/original/");
+			Ecad::rrmdir("upload/ecard/original/$folder_date/");
+			Ecad::rrmdir("upload/ecard/original/");
 		}
 		$rs  =  $make_img_gen_path.$img_ori_name ;
 
@@ -247,8 +249,8 @@ class EcardController extends Controller {
 
 		imagealphablending($new_frame_Img,true);
 		//--- ใส่ข้อความให้รูป
-		$name = custom::substr($name,20) ;
-		$text_rest = custom::substr($text_rest,30) ;
+		$name = Ecad::substr($name,20) ;
+		$text_rest = Ecad::substr($text_rest,30) ;
 		//imagettftext( image , font size , angle(องศาของตัวอักษร) , ตำแหน่ง x , ตำแหน่ง y  , color , fontfile , text );
 		imagettftext($new_frame_Img, $font_size_1, $font_angle , 102, 485, $text_1_color_black, $font_path, $name);
 		imagettftext($new_frame_Img, $font_size_2, $font_angle , 102, 525, $text_2_color_white, $font_path, $text_rest);
@@ -281,8 +283,8 @@ class EcardController extends Controller {
 			//---  ขั้นตอนการลบรูป original ออกจาก server
 			chmod($urlimage, 0644);
 			unlink($urlimage);
-			custom::rrmdir("upload/ecard/original/$folder_date/");
-			custom::rrmdir("upload/ecard/original/");
+			Ecad::rrmdir("upload/ecard/original/$folder_date/");
+			Ecad::rrmdir("upload/ecard/original/");
 		}
 		$rs  =  $make_img_gen_path.$img_ori_name ;
 
@@ -320,7 +322,7 @@ class EcardController extends Controller {
 
 	public function gallerySelect($id){
 
-		$chk = custom::chkformatNumber($id);
+		$chk = Ecad::chkformatNumber($id);
 		if(!$chk){
 			return "error" ;
 		}

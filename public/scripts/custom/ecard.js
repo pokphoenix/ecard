@@ -2,6 +2,7 @@ $(function() {
     $('#show-gen-img').hide();
 
 
+
     //$('col-centered')
     $('.modal-vcenter').on('show.bs.modal', function(e) {
         centerModals($(this));
@@ -19,13 +20,10 @@ $(function() {
     });
     $('.cropit-image-input').on("change", function()
     {
-
-        console.log(this.files[0].size) ;
-
+        if (this.files[0].size > 5242880 ){ alert("รูปขนาดใหญ่เกิน 5 Mb ค่ะ"); return ;}
         $('#image-cropper').cropit('initialZoom', 'image');
         $('#fbuid').val('');
         $('#m').val('desc');
-
     });
     var afloadpage = $('#name').val().length;
     $("#name_len").html(afloadpage+' ตัวอักษร');
@@ -93,6 +91,18 @@ $(function() {
 
 
 });
+
+
+function detectPopupBlocker() {
+    var myTest = window.open("about:blank","","directories=no,height=100,width=100,menubar=no,resizable=no,scrollbars=no,status=no,titlebar=no,top=0,location=no");
+    if (!myTest) {
+        alert("A popup blocker was detected.");
+    } else {
+        myTest.close();
+        alert("No popup blocker was detected.");
+    }
+}
+
 function getBase64ImageExportJS(img,callback) {
     var image = new Image();
     image.crossOrigin = 'Anonymous';
@@ -128,11 +138,9 @@ function page_reload(){
     $('#call_ang').click();
     $('#success_popup').modal('toggle');
     $("#success_popup").on("hidden.bs.modal",function(e){
-        $('#first-page').hide();
+        $('#first-page').slideUp('fast');
         $('#play-page').show();
     });
-
-
 }
 function see_gallery(){
     $('#success_popup').modal('toggle');
@@ -151,13 +159,14 @@ function ajaxData(){
         data : postData,
         success:function(data)
         {
+            if(data =="error"){ alert("การอัพโหลดรูป ผิดพลาด") ; return false; }
             var str = data;
             success_upload();
             $('#image-cropper').cropit('imageSrc','images/ecard_main/photo_blank.png');
 
 //                            $('#show-gen-img').show();
 //                            $('#show-gen-img').attr("src", data);
-            $('#img_gen').val(data);
+//            $('#img_gen').val(data);
 
             $('#call_ang').click();
             //console.log('ang',angular.element($("#ecard-gallery"))) ;
@@ -244,7 +253,7 @@ function getBase64Image(img,callback) {
     image.src = img ;
 }
 function chose_photo(link){
-    console.log(link);
+    //console.log(link);
     getBase64Image(link,function () {}) ;
     fn_close()
 }
@@ -276,19 +285,23 @@ function fn_close(){
     $('#fb_popup').modal('toggle');
 }
 function play_ecard(){
-    $('#first-page').hide();
-    $('#play-page').show();
+
+    $('#first-page').slideUp('fast');
+
+    $('#play-page').show()     ;
+
+    //$('#play-page').show().animate({ top: 305 }, {duration: 1000, easing: 'easeOutBounce'});
 }
 function change_frame(int_number){
     switch (int_number){
         case "1" :
             $('#frame_image').val('1');
-            $('#frame_ecard').attr('src','images/ecard_main/play_frame_1.png');
+            $('#frame_ecard').attr('src','images/ecard/201511_frame1.png');
             $('#frame_ecard_star').hide();
             break;
         case "2" :
             $('#frame_image').val('2');
-            $('#frame_ecard').attr('src','images/ecard_main/play_frame_2.png');
+            $('#frame_ecard').attr('src','images/ecard/201511_frame2.png');
             $('#frame_ecard_star').show();
             break;
     }

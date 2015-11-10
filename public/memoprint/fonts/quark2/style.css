@@ -1,12 +1,35 @@
 @font-face {
     font-family: 'Quark';
-    src: url('Quark-Light.otf') format('truetype');
+    src: url('quark-light-webfont.eot');
+    src: url('quark-light-webfont.eot?#iefix') format('embedded-opentype'),
+    url('quark-light-webfont.woff2') format('woff2'),
+    url('quark-light-webfont.woff') format('woff'),
+    url('quark-light-webfont.ttf') format('truetype'),
+    url('quark-light-webfont.svg#quarklight') format('svg');
+
+
+
+    /*src: url('Quark-Light.otf') ; /!* IE9 Compat Modes *!/*/
+    /*src: url('Quark-Light.otf?#iefix') format('embedded-opentype'), /!* IE6-IE8 *!/*/
+         /*url('Quark-Light.otf') format('woff'), /!* Modern Browsers *!/*/
+         /*url('Quark-Light.otf')  format('truetype'); /!* Safari, Android, iOS *!/*/
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'Quark';
-    src: url('Quark-Bold.otf') format('truetype');
+    src: url('quark-light-webfont.eot');
+    src: url('quark-light-webfont.eot?#iefix') format('embedded-opentype'),
+    url('quark-light-webfont.woff2') format('woff2'),
+    url('quark-light-webfont.woff') format('woff'),
+    url('quark-light-webfont.ttf') format('truetype'),
+    url('quark-light-webfont.svg#quarklight') format('svg');
+
+
+    /*src: url('Quark-Light.otf') ; /!* IE9 Compat Modes *!/*/
+    /*src: url('Quark-Light.otf?#iefix') format('embedded-opentype'), /!* IE6-IE8 *!/*/
+    /*url('Quark-Light.otf') format('woff'), /!* Modern Browsers *!/*/
+    /*url('Quark-Light.otf')  format('truetype'); /!* Safari, Android, iOS *!/*/
     font-weight: bold;
     font-style: normal;
 }
