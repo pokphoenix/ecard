@@ -32,13 +32,27 @@ angular.module('ecard.gallery', [])
             $scope.currentPage = 1;
             $scope.range = [];
             $scope.getPosts = function(pageNumber){
+                $scope.text = "";
+                $scope.name = "";
                 if(pageNumber===undefined||pageNumber==0){
                     pageNumber = '1';
                 }
+                //console.log('pageNumber' ,pageNumber) ;
+                //console.log('currentPage' ,$scope.currentPage) ;
+                //console.log('totalPages' ,$scope.totalPages) ;
+                //console.log('gallery_image_page' ,$scope.gallery_image_page) ;
+
+                if ( (pageNumber >= $scope.totalPages)&& ($scope.currentPage >= $scope.totalPages) &&  $scope.gallery_image_page!=1 ){
+                    return false;
+                }
+
                 ecardGallery.viewData(pageNumber).success(function(result){ // ดึงข้อมูลสำเร็จ ส่งกลับมา
                     $scope.data = result.data;
                     $scope.totalPages   = result.last_page;
                     $scope.currentPage  = result.current_page;
+
+
+
                     $scope.gallery_image_page = pageNumber ;
                     // Pagination Range
                     var pages = [];
@@ -60,13 +74,11 @@ angular.module('ecard.gallery', [])
             //$scope.$on('LOAD',function(){$scope.loading=true});
             //$scope.$on('UNLOAD',function(){$scope.loading=false});
 
-            $scope.close_search = function(){
-                getPosts(1);
-                $scope.sts_selectpic = false ;
-            }
+
             $scope.close_search=function(){
                 $scope.getPosts(1);
                 $scope.sts_selectpic = false ;
+                $scope.autocomplete = false ;
             }
             $scope.complete=function(){
                 var txt = $scope.search_name;

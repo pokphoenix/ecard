@@ -5,8 +5,7 @@
 class custom
 {
     public static function substr($string, $len){
-
-        return  strlen($string) > $len ? substr($string,0,$len)."..." : $string;
+        return  mb_strlen($string,"UTF-8") > $len ? mb_substr($string,0,$len)."..." : $string ;
     }
 
     public static function substr_with_ellipsis($string, $chars)

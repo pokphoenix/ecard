@@ -32,15 +32,6 @@ $(function() {
 
     $('#show-gen-img').hide();
 
-    $(".hover_img").click(function() {
-        //var img = $(this).find(".header_pic img"); // use a variable to store your image element in case you have to change the container class
-        console.log('click');
-        //var img = $(this).attr("src"); // not necessary to store it, could be use as it in the if statement
-        //console.log(img);
-        //$("#show_hover_img").attr("src",img) ;
-        //$('#hover_pic_popup').modal('toggle');
-    });
-
 
 
     //$('col-centered')
@@ -51,8 +42,7 @@ $(function() {
 
     $('.cropit-image-preview').css("background-image", "url('images/ecard_main/photo_blank.png')");
     $('#image-cropper').cropit({
-
-        //initialZoom:'image',
+        initialZoom:'image',
         smallImage:'stretch',
         allowCrossOrigin:true
     });
@@ -86,53 +76,52 @@ $(function() {
 
     $("#ecardform").submit(function(e)
     {
-        $('.loading').show();
+
         var mode_submit = $('#m').val() ;
         if (mode_submit!="desc"&&mode_submit!="fb"){
             $('#error_popup').modal('toggle');
             return false;
         }
 
-        if(mode_submit=="desc"){
-            $('#fbuid').val('');
-            var exzoom =  $('#image-cropper').cropit('exportZoom',2); //--- เซ็ตให้รูปที่ส่งค่าไปขนาดเท่ารูปจริง (แก้ปัญหารูปที่ส่งไปเล็กแล้วไป resize ให้ใหญ่แล้วรูปแตก)
-            var imageData = $('#image-cropper').cropit('export', {
-                type: 'image/jpeg',
-                quality: 1,
-                originalSize: true
-            });
-            $('.hidden-image-data').val(imageData);
-            ajaxData();
-        }else if(mode_submit=="fb"){
-            //--- ถ้าเป็นรูปจาก faceboook จะต้อง gen รูปใหม่
-            //var imgFB = $('.cropit-image-loaded').css('background-image');
-            //imgFB = imgFB.replace('url(','').replace(')','');
-            var imgFB = $("#fb-img").val();
-            getBase64ImageExport(imgFB,function () {
-                ajaxData();
-            }) ;
-        }
+        //if(mode_submit=="desc"){
+        //    $('#fbuid').val('');
+        //    var exzoom =  $('#image-cropper').cropit('exportZoom',2); //--- เซ็ตให้รูปที่ส่งค่าไปขนาดเท่ารูปจริง (แก้ปัญหารูปที่ส่งไปเล็กแล้วไป resize ให้ใหญ่แล้วรูปแตก)
+        //    var imageData = $('#image-cropper').cropit('export', {
+        //        type: 'image/jpeg',
+        //        quality: 1,
+        //        originalSize: true
+        //    });
+        //    $('.hidden-image-data').val(imageData);
+        //    ajaxData();
+        //}else if(mode_submit=="fb"){
+        //    //--- ถ้าเป็นรูปจาก faceboook จะต้อง gen รูปใหม่
+        //    var imgFB = $('.cropit-image-loaded').css('background-image');
+        //    imgFB = imgFB.replace('url(','').replace(')','');
+        //    getBase64ImageExport(imgFB,function () {
+        //        ajaxData();
+        //    }) ;
+        //}
 
 
 
-        //html2canvas($("#image-cropper"), {
-        //
-        //    proxy: "html2canvasproxy.php",
-        //    useCORS:true,
-        //
-        //    onrendered: function(canvas) {
-        //        theCanvas = canvas;
-        //        theCanvas.id = "canvas_image" ;
-        //        document.body.appendChild(canvas);
-        //        var canvas = document.getElementById('canvas_image');
-        //        var dataURL = canvas.toDataURL("image/jpeg",100);
-        //        console.log(dataURL);
-        //        getBase64ImageExportJS(dataURL,function () {
-        //                ajaxData();
-        //        }) ;
-        //
-        //    }
-        //});
+        html2canvas($("#gen-image"), {
+
+            proxy: "html2canvasproxy.php",
+            useCORS:true,
+
+            onrendered: function(canvas) {
+                theCanvas = canvas;
+                theCanvas.id = "canvas_image" ;
+                document.body.appendChild(canvas);
+                var canvas = document.getElementById('canvas_image');
+                var dataURL = canvas.toDataURL("image/jpeg",100);
+                console.log('gen pic');
+                getBase64ImageExportJS(dataURL,function () {
+                        ajaxData();
+                }) ;
+
+            }
+        });
 
 
         e.preventDefault(); //STOP default action
@@ -141,7 +130,6 @@ $(function() {
 
 
 });
-
 
 
 function detectPopupBlocker() {
@@ -158,7 +146,7 @@ function getBase64ImageExportJS(img,callback) {
     var image = new Image();
     image.crossOrigin = 'Anonymous';
     image.onload = function() {
-        imgPosX = 0 ;
+        imgPosX = -45 ;
         imgPosY = 0 ;
         imgSizeX = $('#canvas_image').width() ;
         imgSizeY = $('#canvas_image').height() ;
@@ -175,7 +163,7 @@ function getBase64ImageExportJS(img,callback) {
         ctx.drawImage(this, imgPosX*exportZoom, imgPosY*exportZoom,  imgSizeX*exportZoom,  imgSizeY*exportZoom);
         var dataURL = canvas.toDataURL("image/jpeg",100);
         $('.hidden-image-data').val(dataURL);
-        console.log('afgen',dataURL);
+        //console.log('afgen',dataURL);
         callback.call(this, dataURL);
     };
     image.src = img ;
@@ -188,14 +176,6 @@ function fb_reload(){
         $('#first-page').slideUp('fast');
         $('#play-page').show();
     });
-}
-
-
-
-function hover_img(img){
-    $("#show_hover_img").attr("src",img.src) ;
-    $('#call_ang').click();
-    $('#hover_pic_popup').modal('toggle');
 }
 
 function page_reload(){
@@ -214,11 +194,7 @@ function see_gallery(){
 }
 
 function ajaxData(){
-    console.log( $('#image_data').val());
-
     var postData = $("#ecardform").serializeArray();
-
-
     $.ajax({
         url : "ecard-ajax",
         async: false,
@@ -229,13 +205,11 @@ function ajaxData(){
             if(data =="error"){ alert("การอัพโหลดรูป ผิดพลาด") ; return false; }
             var str = data;
             success_upload();
-            $('#image-cropper').cropit('imageSrc','images/ecard_main/photo_blank.png');
-            //$('.cropit-image-preview').css("background-image", "url('images/ecard_main/photo_blank.png')");
+            //$('#image-cropper').cropit('imageSrc','images/ecard_main/photo_blank.png');
+            $('.cropit-image-preview').css("background-image", "url('images/ecard_main/photo_blank.png')");
 
                             //$('#show-gen-img').show();
                             //$('#show-gen-img').attr("src", data);
-            //console.log(data);
-            $('.loading').show();
             $('#img_gen').val(data);
             $('#call_ang').click();
             $('#m,#text_rest,#name').val('');
@@ -269,70 +243,6 @@ function centerModals($element) {
 
 
 function getBase64ImageExport(img,callback) {
-    console.log('base 64');
-
-        //imgPos = $('.cropit-image-loaded').css("background-position").split(" ");
-        //imgPosX = parseInt(imgPos[0],10) ;
-        //imgPosY = parseInt(imgPos[1],10) ;
-        ////console.log(imgPosX ,imgPosY);
-        //imgSize = $('.cropit-image-loaded').css("background-size").split(" ")
-        //imgSizeX = parseInt(imgSize[0],10) ;
-        //imgSizeY = parseInt(imgSize[1],10) ;
-        ////console.log(imgSizeX,imgSizeY);
-        //var exportZoom = 2 ;
-        //var previewSizeW = 300 ;
-        //var previewSizeH = 300 ;
-        //$('canvas').remove();
-        //var canvas = document.createElement("canvas");
-        //canvas.width = previewSizeW*exportZoom;
-        //canvas.height = previewSizeH*exportZoom;
-        //var ctx = canvas.getContext("2d");
-        //ctx.fillStyle = '#fff' ;
-        //ctx.fillRect(imgPosX, imgPosY, previewSizeW, previewSizeH);
-        //ctx.drawImage(img, imgPosX*exportZoom, imgPosY*exportZoom, exportZoom * imgSizeX, exportZoom * imgSizeY);
-        //var dataURL = canvas.toDataURL("image/jpeg",100);
-        //$('.hidden-image-data').val(dataURL);
-        //console.log('afgen',dataURL);
-        //callback.call(this, dataURL);
-
-    var image = new Image() ;
-    image.crossOrigin = 'Anonymous';
-    image.onload = function() {
-        imgPos = $('.cropit-image-loaded').css("background-position").split(" ");
-        imgPosX = parseInt(imgPos[0],10) ;
-        imgPosY = parseInt(imgPos[1],10) ;
-        //console.log(imgPosX ,imgPosY);
-        imgSize = $('.cropit-image-loaded').css("background-size").split(" ")
-        imgSizeX = parseInt(imgSize[0],10) ;
-        imgSizeY = parseInt(imgSize[1],10) ;
-        //console.log(imgSizeX,imgSizeY);
-        var exportZoom = 2 ;
-        var previewSizeW = 300 ;
-        var previewSizeH = 300 ;
-        $('canvas').remove();
-
-        var canvas = document.createElement("canvas");
-        canvas.width = previewSizeW*exportZoom;
-        canvas.height = previewSizeH*exportZoom;
-        var ctx = canvas.getContext("2d");
-        ctx.fillStyle = '#fff' ;
-        ctx.fillRect(imgPosX, imgPosY, previewSizeW, previewSizeH);
-        ctx.drawImage(this, imgPosX*exportZoom, imgPosY*exportZoom, exportZoom * imgSizeX, exportZoom * imgSizeY);
-        var dataURL = canvas.toDataURL("image/jpeg",100);
-        $('.hidden-image-data').val(dataURL);
-        //console.log('afgen',dataURL);
-        callback.call(this, dataURL);
-    };
-    image.src = img ;
-    // make sure the load event fires for cached images too
-    //if ( img.complete || img.complete === undefined ) {
-    //    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-    //    img.src = src;
-    //}
-
-}
-
-function getBase64ImageExportOld(img,callback) {
     var image = new Image();
     image.crossOrigin = 'Anonymous';
     image.onload = function() {
@@ -357,11 +267,13 @@ function getBase64ImageExportOld(img,callback) {
         ctx.drawImage(this, imgPosX*exportZoom, imgPosY*exportZoom, exportZoom * imgSizeX, exportZoom * imgSizeY);
         var dataURL = canvas.toDataURL("image/jpeg",100);
         $('.hidden-image-data').val(dataURL);
-        console.log('afgen',dataURL);
+        //console.log(dataURL);
         callback.call(this, dataURL);
     };
     image.src = img ;
 }
+
+
 function getBase64Image(img,callback) {
     var image = new Image();
            console.log(img);
@@ -385,7 +297,6 @@ function getBase64Image(img,callback) {
 }
 function chose_photo(link){
     //console.log(link);
-    $("#fb-img").val(link);
     getBase64Image(link,function () {}) ;
     fn_close()
 }

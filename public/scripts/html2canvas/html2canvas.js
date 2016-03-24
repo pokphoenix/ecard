@@ -2398,7 +2398,7 @@ _html2canvas.Preload = function( options ) {
         } else if ( supportCORS && !options.allowTaint && options.useCORS ) {
           // attempt to load with CORS
 
-          img.crossOrigin = "anonymous";
+          img.crossOrigin = "Anonymous";
           imageObj = images[src] = {
             img: img
           };
@@ -2542,7 +2542,7 @@ _html2canvas.Renderer = function(parseQueue, options){
         context[zi].forEach(function(v) {
           if (v.node.zIndex.isPositioned || v.node.zIndex.opacity < 1) {
             // http://www.w3.org/TR/css3-color/#transparency
-            // non-positioned element with opactiy < 1 should be stacked as if it were a positioned element with â€˜z-index: 0â€™ and â€˜opacity: 1â€™.
+            // non-positioned element with opactiy < 1 should be stacked as if it were a positioned element with â€?z-index: 0â€? and â€?opacity: 1â€?.
             positioned.push(v);
           } else if (v.node.zIndex.isFloated) {
             floated.push(v);

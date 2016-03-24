@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" ng-app="ecard.gallery" >
 
@@ -24,23 +25,46 @@
 
     <link rel="stylesheet" href="{{asset('scripts/bootstrap-3.3.2/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('scripts/font-awesome/css/font-awesome.min.css')}}">
+
     <link rel="stylesheet" href="{{asset('memoprint/fonts/arabica2/stylesheet.css')}}">
     {{--<link rel="stylesheet" href="{{asset('memoprint/fonts/sukhumvit/style.css')}}">--}}
     {{--<link rel="stylesheet" href="{{asset('memoprint/fonts/thaisans_neue/style.css')}}">--}}
     {{--<link rel="stylesheet" href="{{asset('memoprint/fonts/quark2/style.css')}}">--}}
     <link rel="stylesheet" href="{{asset('memoprint/fonts/quark/stylesheet.css')}}">
     <link rel="stylesheet" href="{{asset('memoprint/css/ecard.css')}}">
-    <script src="{{asset('scripts/jquery-1.11.1.min.js')}}"></script>
-    {{--<script src="{{asset('scripts/html2canvas/html2canvas.js')}}"></script>--}}
-    {{--<script src="{{asset('scripts/html2canvas/html2canvas.min.js')}}"></script>--}}
+    {{--<link rel="stylesheet" href="{{asset('scripts/jscrollpane/jquery.jscrollpane.css')}}" >--}}
 
-    <script src="{{asset('scripts/bootstrap-3.3.2/js/bootstrap.min.js')}} "></script>
-    <script src="{{asset('scripts/cropit/jquery.cropit.js')}}"></script>
-    <script src="{{asset('scripts/angular.min.js')}} "></script>
-    <script src="{{asset('scripts/custom/angular.ecard.js')}} "></script>
-    <script src="{{asset('scripts/custom/ecard.js')}} "></script>
-    {{--<script src="{{asset('scripts/custom/app.js')}} "></script>--}}
+    <script src="{{asset('scripts/jquery-1.11.1.min.js')}}"></script>
+    {{--<script src="{{asset('scripts/jscrollpane/jquery.mousewheel.js')}} "></script>--}}
+    {{--<script src="{{asset('scripts/jscrollpane/jquery.jscrollpane.min.js')}} "></script>--}}
+
+    <script src="{{asset('scripts/html2canvas/html2canvas.js')}}"></script>
+</head>
+
+<body>
+<div>
+
     <script>
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    var uid = response.authResponse.userID;
+                    var accessToken = response.authResponse.accessToken;
+                    $('#m').val('fb');
+                    $('#fbuid').val(uid);
+                    get_facebook_data();
+                }
+            });
+        }
+        function fblogin(){
+            $('#main-wrapper,.loading').show();
+            FB.login(function (response) {
+                if (response.authResponse != null && response.authResponse != undefined) {
+                    checkLoginState()
+                }
+            }, { scope: 'publish_actions,user_photos' });
+            return false;
+        }
         window.fbAsyncInit = function() {
             FB.init({
                 appId      : '546857855463355',
@@ -58,26 +82,7 @@
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-        function checkLoginState() {
-            FB.getLoginStatus(function(response) {
-                if (response.status === 'connected') {
-                    var uid = response.authResponse.userID;
-                    var accessToken = response.authResponse.accessToken;
-                    $('#m').val('fb');
-                    $('#fbuid').val(uid);
-                    get_facebook_data();
-                }
-            });
-        }
-        function fblogin(){
-            //$('#main-wrapper,.loading').show();
-            FB.login(function (response) {
-                if (response.authResponse != null && response.authResponse != undefined) {
-                    checkLoginState()
-                }
-            }, { scope: 'publish_actions,user_photos' });
-            return false;
-        }
+
         function get_facebook_data(){
             FB.api(
                     '/me',
@@ -101,53 +106,33 @@
                 picture: 'http://103.245.167.79/ecard/public/'+pic
             }, function (response) {
                 if (response && response != null) {
-                    $('#fb_popup').modal('hide');
-                    $('#call_ang').click();
+                    fb_reload();
                 }
             });
         }
+
     </script>
-    <style>
-
-
-
-    </style>
-</head>
-
-<body>
-<div>
-
-
-
     <div id="fb-root"></div>
 
     {{--<input class="btn-ecard" type="button" id="btnSave" value="Save PNG"/>--}}
 
     {{--<button  onclick="canpic()" >--}}
-        {{--test1--}}
+    {{--test1--}}
     {{--</button>--}}
 
     {{--<button class="btn-ecard" onclick="window.open('', document.getElementById('canpic').toDataURL());" >--}}
-        {{--test2--}}
+    {{--test2--}}
     {{--</button>--}}
     {{--<a class="btn-ecard" onclick="return fblogin()" href="https://www.facebook.com/dialog/oauth?client_id=546857855463355&amp;client_secret=c4bf06cd95121e6014b4d2d30f76e85c&amp;redirect_uri=http://192.168.1.3/ecard/public/ecard&amp;response_type=code&amp;scope=email,user_photos,publish_actions"></a>--}}
 
 
     {{--<button class="btn-ecard"  data-toggle="modal" data-target="#success_popup">--}}
-        {{--Modal--}}
+    {{--Modal--}}
     {{--</button>--}}
     <div class="main-wrapper" id="main-wrapper"  style="width:100%;height:100%;position:absolute;background: #1a1a1a;z-index:20;">
         <img src="{{asset('images/ecard_main/loading.gif')}}" class="loading" style="display:none;">
     </div>
-    <nav class="navbar navbar-inverse" style="border-radius:0px !important;">
-        <div class="container-fluid"  >
-            <div class="navbar-header" >
-                <a class="navbar-center navbar-brand" href="http://www.memoprint.me" >
-                    <img alt="Brand" src="http://www.memoprint.me/wp-content/uploads/2015/09/mp_logo_float_80.png">
-                </a>
-            </div>
-        </div>
-    </nav>
+
     <div id="page-content" ng-controller="ecard-gallery">
         <!--  Container -->
         <div class="container-fluid col-md-12 col-centered">
@@ -155,7 +140,7 @@
                 <div class="main">
                     <div class="row-fluid">
                         <div class="col-xs-12 col-md-3 pull-right first-page-content" >
-                            <span class="fst-keep" >KEEP YOUR</span><br>
+                            <span class="fst-keep" >KEEP YOUR </span><br>
                             <span class="fst-memory" >MEMORY</span><br>
                             <span class="fst-intime" >IN TIME</span><br>
                             <div class="h20"></div>
@@ -181,7 +166,6 @@
                         <input type="hidden" name="img_gen" id="img_gen" value="" />
                         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="fbuid" id="fbuid" value="" />
-                        <input type="hidden" name="fb-img" id="fb-img" value="" />
                         <input type="hidden" name="m" id="m" value="" />
                         <input type="hidden" name="image_data" id="image_data" class="hidden-image-data" />
                         <input type="hidden" name="call_ang" id="call_ang" ng-click="getPosts(1)" >
@@ -194,7 +178,7 @@
                         </div>
                         <div class="col-md-12" style="height:50px;"></div>
                         <div class="row-fluid upload_img_row" >
-                            <div class="col-md-7 img-crop-layer" >
+                            <div class="col-md-8 img-crop-layer" >
                                 <div class="r" style="z-index:0;">
                                     <img src="{{asset('images/ecard_main/play_frame_stamp.png')}}" >
                                 </div>
@@ -209,9 +193,9 @@
                                             <input type="file" class="cropit-image-input" />
                                         </div>
                                     </div>
-                                    <div class="a play_font_text_name" style="@if(Ecad::chkBrowser("Edge")==1){{ "margin-top:-240px;"  }}@elseif(Ecad::chkBrowser("Firefox")==1) {{ "margin-top:-245px;" }}  @elseif(Ecad::chkBrowser("Chrome")==1) {{ "margin-top:-217px;" }} @elseif(Ecad::chkBrowser("MSIE")==1) {{ "margin-top:-240px;" }} @endif  }}" > @{{ name }}</div>
-                                    <div class="a play_font_message" style="@if(Ecad::chkBrowser("Edge")==1){{ "margin-top:-200px;"  }}@elseif(Ecad::chkBrowser("Firefox")==1) {{ "margin-top:-205px;" }}  @elseif(Ecad::chkBrowser("Chrome")==1) {{ "margin-top:-177px;" }} @elseif(Ecad::chkBrowser("MSIE")==1) {{ "margin-top:-200px;" }} @endif  }}" > @{{ text }}</div>
-                                    <div class="a play_keep_memory" style="@if(Ecad::chkBrowser("Edge")==1){{ "margin-top:-170px;"  }}@elseif(Ecad::chkBrowser("Firefox")==1) {{ "margin-top:-177px;" }}  @elseif(Ecad::chkBrowser("Chrome")==1) {{ "margin-top:-147px;" }} @elseif(Ecad::chkBrowser("MSIE")==1) {{ "margin-top:-170px;" }} @endif  }}" >#keepmemoryintime</div>
+                                    <div class="a play_font_text_name" style="@if(Ecad::chkBrowser("Edge")==1){{ "margin-top:-240px;"  }}@elseif(Ecad::chkBrowser("Firefox")==1) {{ "margin-top:-245px;" }}  @elseif(Ecad::chkBrowser("Chrome")==1) {{ "margin-top:-220px;" }} @elseif(Ecad::chkBrowser("MSIE")==1) {{ "margin-top:-240px;" }} @endif  }}"> @{{ name }}</div>
+                                    <div class="a play_font_message" style="@if(Ecad::chkBrowser("Edge")==1){{ "margin-top:-200px;"  }}@elseif(Ecad::chkBrowser("Firefox")==1) {{ "margin-top:-205px;" }}  @elseif(Ecad::chkBrowser("Chrome")==1) {{ "margin-top:-180px;" }} @elseif(Ecad::chkBrowser("MSIE")==1) {{ "margin-top:-200px;" }} @endif  }}"> @{{ text }}</div>
+                                    <div class="a play_keep_memory" style="@if(Ecad::chkBrowser("Edge")==1){{ "margin-top:-170px;"  }}@elseif(Ecad::chkBrowser("Firefox")==1) {{ "margin-top:-177px;" }}  @elseif(Ecad::chkBrowser("Chrome")==1) {{ "margin-top:-150px;" }} @elseif(Ecad::chkBrowser("MSIE")==1) {{ "margin-top:-170px;" }} @endif  }}" >#keepmemoryintime</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-4 col-md-4 pd mg pagination pagination-crop-img" style="@if(Ecad::chkBrowser("Edge")==1){{ "margin-top:-80px;"  }}@elseif(Ecad::chkBrowser("Firefox")==1) {{ "margin-top:-83px;" }}  @elseif(Ecad::chkBrowser("Chrome")==1) {{ "margin-top:-65px;" }} @elseif(Ecad::chkBrowser("MSIE")==1) {{ "margin-top:-65px;" }} @endif  }} z-index:10;">
@@ -223,11 +207,12 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-5 play-form-input">
+                            <div class="col-md-4 play-form-input">
                                 <div class="col-xs-6">
-                                    <a class="btn-ecard btn-e-blue btn-e-30 center-block btn-a" style="text-decoration: none;" onclick="return fblogin()" href="https://www.facebook.com/dialog/oauth?client_id=546857855463355&client_secret=c4bf06cd95121e6014b4d2d30f76e85c&redirect_uri=http://103.245.167.79/ecard/public/ecard&response_type=code&scope=publish_actions,user_photos">
+                                    <a class="btn-ecard btn-e-blue btn-e-30 center-block btn-a" style="text-decoration: none;" onclick="return fblogin()" href="https://www.facebook.com/dialog/oauth?client_id=546857855463355&amp;client_secret=c4bf06cd95121e6014b4d2d30f76e85c&amp;redirect_uri=http://103.245.167.79/ecard/public/ecard&amp;response_type=code&amp;scope=email,user_photos,publish_actions">
                                         <i class="fa fa-facebook-square" style="font-size: 44px;"></i><BR><span style="font-weight: normal;">FACEBOOK</span>
                                     </a>
+                                    {{--<button type="button" class="btn-ecard btn-e-blue btn-e-30 center-block" style="margin-right:10px; padding:20px 30px 20px 30px;" onclick="checkLoginState()"><i class="fa fa-facebook-square" style="font-size: 44px;"></i><BR><span style="font-weight: normal;">FACEBOOK</span></button>--}}
                                 </div>
                                 <div class="col-xs-6">
                                     <button type="button" class="btn-ecard btn-e-blue btn-e-30 select-image-btn center-block"  ><i class="glyphicon glyphicon-folder-open" style="font-size: 40px;"></i><BR><span style="font-weight: normal;padding-top:-10px;">UPLOAD</span></button>
@@ -235,20 +220,20 @@
                                 <div class="col-md-12" style="height:50px;"></div>
                                 <div class="form-group">
                                     <label class="col-xs-12" style="font-weight:normal;font-size: 32px;" >ชื่อของคุณ :</label>
-                                    <div class="pull-right" style="margin-top:-45px;margin-right:10px;display:none;"><span id="name_len" style="color:#FF6600;">0 ตัวอักษร</span></div>
+                                    <div class="pull-right" style="margin-top:-45px;margin-right:10px;"><span id="name_len" style="color:#FF6600;">0 ตัวอักษร</span></div>
                                     <div class="col-xs-12 ">
                                         <input id="name" name="name" ng-model="name"  type="text" class="form-control"  placeholder="เช่น memoprint">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-xs-12" style="font-weight:normal;font-size: 32px;">ข้อความโดนใจ :</label>
-                                    <div class="pull-right" style="margin-top:-45px;margin-right:10px;display:none;"><span id="text_rest_len" style="color:#FF6600;">0 ตัวอักษร</span></div>
+                                    <div class="pull-right" style="margin-top:-45px;margin-right:10px;"><span id="text_rest_len" style="color:#FF6600;">0 ตัวอักษร</span></div>
                                     <div class="col-xs-12 ">
                                         <textarea id="text_rest" name="text_rest" ng-model="text" class="form-control" rows="3" cols="80"  placeholder="memoprint" ></textarea>
                                     </div>
                                 </div>
                                 <div class="h20"></div>
-                                <button type="submit" class="btn-ecard" style="width:100%;">ตกลง</button>
+                                <button type="submit" class="btn-ecard btn-e-green" style="width:100%;">ตกลง</button>
                             </div>
                         </div>
                     </form>
@@ -294,6 +279,9 @@
                                 Facebook</p>
                         </li>
                     </ul>
+                    {{--<div class="col-md-12" align="center" style="margin-top:50px;">--}}
+                    {{--<button class="btn-ecard" onclick="play_ecard()" style="font-size:36px;padding:10px 34px 10px 34px;"> <i class="glyphicon glyphicon-camera" ></i> เล่นเลย!!</button>--}}
+                    {{--</div>--}}
                 </div>
                 <div class="clearfix"></div>
             </section>
@@ -313,9 +301,9 @@
                                       <span class="input-group-btn" ng-if="sts_selectpic" >
                                         <button  class="btn btn-default" type="button" ng-click="close_search()" ><i class="glyphicon glyphicon-remove"></i></button>
                                       </span>
-                                </div>
+                                </div><!-- /input-group -->
                                 <ul ng-if="autocomplete" class="a input-block-level " style="z-index:10;margin-left:-30px;" >
-                                    <li ng-repeat="s in searchs"  ng-click="selectpic(s.id)"  class="autocomplete_box" ng-cloak>
+                                    <li ng-repeat="s in searchs"  ng-click="selectpic(s.id)"  class="autocomplete_box" >
                                         @{{ s.name }}
                                     </li>
                                 </ul>
@@ -324,12 +312,12 @@
                     </div>
                     <ul class="row-fluid pd mg" >
                         <li class="col-xs-12 col-sm-6 col-md-3" style="margin:15px 0px;" ng-repeat=" rs in data "  >
-                            <img ng-src="@{{ rs.gen_pic_path+rs.gen_pic_name }}"  class="hover_img img-responsive "  onclick="hover_img(this)" >
+                            <img src="@{{ rs.gen_pic_path+rs.gen_pic_name }}" class="img-responsive" >
                         </li>
                     </ul>
                     <div class="clearfix"></div>
                     <div class="row" >
-                        <div class="col-xs-4 col-md-4 pd mg pagination pagination-gallery" style=" ">
+                        <div class="col-xs-4 col-md-4 pd mg pagination" style="width:270px;line-height: 35px;left:50%; margin-top:50px;margin-left:-135px; ">
                             <button type="button" class="r fl btn-ecard btn-e-green btn-pagination" style=""  ng-click="getPosts(currentPage-1)" ><i class="glyphicon glyphicon-arrow-left" style="font-size:20px;" ></i></button>
                             <div class="r col-centered" style="margin-top:0px;">
                                 <input type="text" id="gallery_image_page" name="gallery_image_page"  ng-model="gallery_image_page" ng-change="getPosts(gallery_image_page)" class="input_pagination" style="width:70px;">
@@ -370,6 +358,9 @@
                                 <div class="gallery_fb_timeline_pic" style="display:none;"></div>
                             </div>
                         </div>
+
+
+
                     </div>
                     <div class="modal-footer" >
                         <button type="button" class="btn-ecard btn-ecard-white btn-fb-gall-back" onclick="fb_popup_back()" style="display: none;"  >back</button>
@@ -399,7 +390,9 @@
                             <button class="btn-ecard btn-e-green center-block" style="width:250px;" onclick="see_gallery();"> ไปที่ Gallery&nbsp;<i class="glyphicon glyphicon-arrow-right"></i></button>
                         </div>
                     </div>
-                    <div class="modal-footer" ></div>
+                    <div class="modal-footer" >
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -417,24 +410,27 @@
                             กรุณาเลือกรูป
                         </div>
                     </div>
-                    <div class="modal-footer" ></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal modal-vcenter fade" id="hover_pic_popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content" >
-                    <div class="modal-body" >
-                        <img src="" id="show_hover_img" class="img-responsive" >
+                    <div class="modal-footer" >
                     </div>
 
                 </div>
             </div>
         </div>
 
+
     </div>
 
+    <img id="show-gen-img" src="">
+
+
+    <script src="{{asset('scripts/bootstrap-3.3.2/js/bootstrap.min.js')}} "></script>
+    <script src="{{asset('scripts/cropit/jquery.cropit.js')}}"></script>
+    <script src="{{asset('scripts/angular.min.js')}} "></script>
+
+
+
+    <script src="{{asset('scripts/custom/angular.ecard.js')}} "></script>
+    <script src="{{asset('scripts/custom/ecard.js')}} "></script>
 
 
 

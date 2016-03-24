@@ -22,7 +22,9 @@ body { overflow-x:hidden; color:#ffffff; font-size:26px; background:#053f64 repe
 @media (max-width: 1200px) {
     .main {  width:100%; }
 }
-
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
 ul {list-style-type: none;}
 section {margin-top:50px;}
 
@@ -71,8 +73,16 @@ form.form-horizontal label.error, label.error {
 }
 button:focus {outline:0;}
 
+.navbar-brand {
+    float: none;
+}
 
 
+.navbar-center
+{
+    margin-top:-20px;width:184px;position:absolute !important;left:-92px !important;margin-left:50% !important;disply:table;text-align:center;
+}
+.navbar-inverse {background:#000; height:80px; border-radius:none !important;}
 
 .btn-ecard{
     -webkit-border-radius: 10px;
@@ -137,6 +147,7 @@ button:focus {outline:0;}
     color: #3fb3a7;
     background: #053f64 ;
     padding:10px 22px 10px 22px;
+    cursor:default;
 }
 .btn_close{
     border: 5px solid #FFF; -webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;padding: 0px 12px 0px 12px;
@@ -200,15 +211,21 @@ button:focus {outline:0;}
     margin-top:-225px;margin-left:119px; background: url('../../images/ecard_main/play_textbox_name.png') no-repeat;z-index:4; width:219px; height:43px;
 }
 .play_font_text_name{
-    margin-top:-220px;margin-left:140px;color:#000;z-index:5; width:180px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;font-weight: bold;font-style:italic;
+    margin-top:-220px;margin-left:140px;color:#000;z-index:5; width:180px;font-weight: bold;
+    /*font-style:italic;*/
+    font-size: 24px;
+    text-align:justify;
+    /*text-overflow:ellipsis;white-space:nowrap;overflow:hidden;*/
+
 }
 
 .play_keep_memory{
-    margin-top:-150px;margin-left:130px;color:#f3a000;z-index:5; width:250px;
+    margin-top:-150px;margin-left:140px;color:#f3a000;z-index:5; width:250px;
+    font-size: 24px;
 }
 
 .play_font_message{
-    margin-top:-180px;margin-left:130px;color:#FFF;z-index:5; width:250px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;
+    margin-top:-180px;margin-left:140px;color:#FFF;z-index:5; width:250px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden; font-size: 24px; text-align:justify;
 }
 .play_frame_2_star{
     display:none;margin-top:-555px;margin-left:460px; background: url('../../images/ecard_main/play_frame_2_star2.png') no-repeat;z-index:4; width:68px; height:135px;
@@ -321,6 +338,10 @@ button:focus {outline:0;}
 }
 
 
+.hover_img{cursor:pointer;}
+
+
+
 .center-cropped {
     display: inline-block;
     width: 100px;
@@ -386,14 +407,15 @@ input[type=range]::-webkit-slider-runnable-track {
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     border: none;
-    height: 16px;
-    width: 16px;
+    height: 40px;
+    width: 40px;
     border-radius:3px;
     background: #3fb3a7;
-    margin-top: -4px;
+    margin-top: -15px;
 }
 input[type=range]:focus {
     outline: none;
+    cursor:pointer;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
     background: #ccc;
@@ -408,8 +430,8 @@ input[type=range]::-moz-range-track {
 }
 input[type=range]::-moz-range-thumb {
     border: none;
-    height: 16px;
-    width: 16px;
+    height: 40px;
+    width: 40px;
     border-radius: 3px;
     background: #3fb3a7;
 }
@@ -509,6 +531,7 @@ input[type=range]:focus::-ms-fill-upper {
 
     .btn-pagination{ font-size:26px; padding: 5px 14px; }
     .pagination-crop-img{margin-left:300px;margin-top:-65px;width:235px;}
+    .pagination-gallery{ width:300px;line-height: 35px;left:50%; margin-top:50px;margin-left:-135px; }
     .form-control{font-size:20px;}
 }
 
@@ -554,12 +577,14 @@ input[type=range]:focus::-ms-fill-upper {
     .form-control{font-size:20px;}
     .btn-pagination{  font-size:26px; padding: 5px 14px;}
     .pagination-crop-img{margin-left:300px;margin-top:-65px;width:235px;}
+    .pagination-gallery{ width:300px;line-height: 35px;left:50%; margin-top:50px;margin-left:-135px; }
 }
 
 /* #### Desktops #### */
 @media screen and (min-width: 1024px){
     /* some CSS here */
     .pagination-crop-img{margin-left:300px;margin-top:-65px;width:235px;}
+    .pagination-gallery{ width:300px;line-height: 35px;left:50%; margin-top:50px;margin-left:-135px; }
 }
 
 
